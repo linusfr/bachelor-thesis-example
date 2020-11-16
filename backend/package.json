@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "PGUSER=test PGHOST=localhost PGDATABASE=items PGPORT=5432 PGPASSWORD=hcFWQgb5gDJA4EWw8Sp7 HOST=localhost PORT=4000 node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linusfr/bachelor-thesis-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/linusfr/bachelor-thesis-example/issues"
+  },
+  "homepage": "https://github.com/linusfr/bachelor-thesis-example#readme",
+  "dependencies": {
+    "fastify": "^3.8.0",
+    "fastify-cors": "^4.1.0",
+    "pg": "^8.5.1"
+  }
+}
