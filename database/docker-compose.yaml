@@ -5,9 +5,9 @@ services:
   db:
     image: postgres
     ports:
-      - "5432"
+      - "6543:5432"
     restart: always
     environment:
-      POSTGRES_USER: test
+      POSTGRES_USER: demo
       POSTGRES_PASSWORD: hcFWQgb5gDJA4EWw8Sp7
-      POSTGRES_DB: items
+      POSTGRES_DB: cats

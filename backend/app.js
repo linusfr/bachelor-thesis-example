@@ -17,19 +17,42 @@ fastify.get('/', function (request, reply) {
 })
 
 // Declare a route
-fastify.get('/items', function (request, reply) {
-    getItems()
-    reply.send([
-        { name: 'bob', type: 'cat' },
-        { name: 'alice', type: 'dog' },
-    ])
+fastify.get('/cats', async function (request, reply) {
+    let cats = await getCats()
+    reply.send(cats)
 })
 
-const getItems = async () => {
+fastify.post('/cat', async function (request, reply) {
+    await createCat(request.body)
+    return { cat: 'created' }
+})
+
+fastify.delete('/cat', async function (request, reply) {
+    await deleteCat(request.body)
+    return { cat: 'deleted' }
+})
+
+const getCats = async () => {
     const client = new Client()
     await client.connect()
     const res = await client.query('SELECT * FROM cat;')
-    console.log(res)
+    await client.end()
+    return res.rows
+}
+
+const createCat = async ({ name, color }) => {
+    const client = new Client()
+    await client.connect()
+    await client.query(
+        `INSERT INTO cat (name, color) VALUES ('${name}', '${color}');`
+    )
+    await client.end()
+}
+
+const deleteCat = async ({ cat_id }) => {
+    const client = new Client()
+    await client.connect()
+    const res = await client.query(`DELETE FROM CAT WHERE cat_id='${cat_id}';`)
     await client.end()
 }
 
