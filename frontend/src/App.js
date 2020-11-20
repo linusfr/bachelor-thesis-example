@@ -8,6 +8,8 @@ import Button from 'react-bootstrap/Button'
 
 import './App.css'
 
+const backendUrl = 'https://cats-api.playground.zisops.com/'
+
 class App extends Component {
     constructor(props) {
         super(props)
@@ -22,7 +24,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:4000/cats')
+        fetch(backendUrl + 'cats', { mode: 'no-cors' })
             .then((res) => res.json())
             .then(
                 (result) => {
@@ -56,12 +58,13 @@ class App extends Component {
         // Simple POST request with a JSON body using fetch
         const requestOptions = {
             method: 'POST',
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: name, color: color }),
         }
-        await fetch('http://localhost:4000/cat', requestOptions)
+        await fetch(backendUrl + 'cat', requestOptions)
 
-        fetch('http://localhost:4000/cats')
+        fetch(backendUrl + 'cats', { mode: 'no-cors' })
             .then((res) => res.json())
             .then(
                 (result) => {
@@ -83,12 +86,13 @@ class App extends Component {
 
         const requestOptions = {
             method: 'DELETE',
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ cat_id: cat_id }),
         }
-        await fetch('http://localhost:4000/cat', requestOptions)
+        await fetch(backendUrl + 'cat', requestOptions)
 
-        fetch('http://localhost:4000/cats')
+        fetch(backendUrl + 'cats', { mode: 'no-cors' })
             .then((res) => res.json())
             .then(
                 (result) => {

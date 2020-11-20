@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: linus
+  labels:
+    app: backend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 4000
+  selector:
+    app: backend
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend-ingress
+  namespace: linus
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # cert-manager.io/cluster-issuer: "letsencrypt-staging"
+spec:
+  tls:
+    - hosts:
+        - cats-api.playground.zisops.com
+      secretName: backend-tls
+  rules:
+    - host: cats-api.playground.zisops.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: linus
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      volumes:
+        - name: db-password
+          secret:
+            secretName: postgres-password-secret
+            defaultMode: 0600
+      containers:
+        - name: backend
+          volumeMounts:
+            - name: db-password
+              mountPath: "/etc/db_password"
+              readOnly: true
+          env:
+            - name: PGUSER
+              value: "demo"
+            - name: PGHOST
+              value: "postgres-service"
+            - name: PGDATABASE
+              value: "cats"
+          image: linosthology/bachelor-thesis-example-backend:1.0
+          ports:
+            - containerPort: 4000
+          command: ["sh"]
+          args: [
+              "-c",
+              '
+              echo "*:*:*:*:$(cat /etc/db_password/password)"
+              > ~/.pgpass
+              &&
+              chmod 0600 ~/.pgpass
+              &&
+              PORT=4000 node app.js
+              ',
+            ]
