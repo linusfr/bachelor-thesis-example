@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 
 import './App.css'
 
-const backendUrl = 'https://cats-api.playground.zisops.com/'
+const backendUrl = 'http://api.cats.playground.zisops.com:4000/'
 
 class App extends Component {
     constructor(props) {

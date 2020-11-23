@@ -6,37 +6,12 @@ metadata:
   labels:
     app: frontend
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 3000
   selector:
     app: frontend
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: frontend-ingress
-  namespace: linus
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    # cert-manager.io/cluster-issuer: "letsencrypt-staging"
-spec:
-  tls:
-    - hosts:
-        - cats.playground.zisops.com
-      secretName: frontend-tls
-  rules:
-    - host: cats.playground.zisops.com
-      http:
-        paths:
-          - pathType: Prefix
-            path: "/"
-            backend:
-              service:
-                name: frontend-service
-                port:
-                  number: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -57,6 +32,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: linosthology/bachelor-thesis-example-frontend:1.4
+          image: linosthology/bachelor-thesis-example-frontend:1.1-service
           ports:
             - containerPort: 3000
