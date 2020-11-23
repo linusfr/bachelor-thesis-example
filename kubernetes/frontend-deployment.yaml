@@ -32,6 +32,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: linosthology/bachelor-thesis-example-frontend:1.1-service
+          image: linosthology/bachelor-thesis-example-frontend:1.4-service
           ports:
             - containerPort: 3000
+          command: ["sh"]
+          args: ["-c", "serve -s build -l 3000"]

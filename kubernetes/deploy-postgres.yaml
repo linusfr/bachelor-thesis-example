@@ -20,8 +20,8 @@ metadata:
   namespace: linus
 data:
   host: "postgres-service"
-  dbname: "test_db"
-  user: "test"
+  dbname: "cats"
+  user: "demo"
 ---
 apiVersion: apps/v1
 kind: StatefulSet

@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 
 import './App.css'
 
-const backendUrl = 'http://api.cats.playground.zisops.com:4000/'
+const backendUrl = 'http://apitest.playground.zisops.com:4000/'
 
 class App extends Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch(backendUrl + 'cats', { mode: 'no-cors' })
+        fetch(backendUrl + 'cats')
             .then((res) => res.json())
             .then(
                 (result) => {
@@ -58,13 +58,12 @@ class App extends Component {
         // Simple POST request with a JSON body using fetch
         const requestOptions = {
             method: 'POST',
-            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: name, color: color }),
         }
         await fetch(backendUrl + 'cat', requestOptions)
 
-        fetch(backendUrl + 'cats', { mode: 'no-cors' })
+        fetch(backendUrl + 'cats')
             .then((res) => res.json())
             .then(
                 (result) => {
@@ -86,13 +85,12 @@ class App extends Component {
 
         const requestOptions = {
             method: 'DELETE',
-            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ cat_id: cat_id }),
         }
         await fetch(backendUrl + 'cat', requestOptions)
 
-        fetch(backendUrl + 'cats', { mode: 'no-cors' })
+        fetch(backendUrl + 'cats')
             .then((res) => res.json())
             .then(
                 (result) => {

@@ -12,11 +12,14 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm install --silent
 RUN npm install react-scripts@4.0.0 -g --silent
+RUN npm install -g serve --silent
 
 # add app
 COPY . ./
 
+RUN npm run build
+
 EXPOSE 3000
 
 # start app
-CMD ["npm", "start"]
+CMD ["serve", "serve -s build -l 3000"]

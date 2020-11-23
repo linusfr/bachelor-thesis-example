@@ -7,22 +7,51 @@
 -- CATS
 --------------------------
 
-CREATE TABLE cat (cat_id serial PRIMARY KEY, name VARCHAR ( 50 ) NOT NULL, color VARCHAR ( 255 ) NOT NULL);
+-- psql -U demo -d cats -c "CREATE TABLE IF NOT EXISTS cat(cat_id serial PRIMARY KEY, name VARCHAR ( 50 ) NOT NULL, color VARCHAR ( 255 ) NOT NULL);"
 
-INSERT INTO cat (name, color) VALUES ('bob', 'red');
-INSERT INTO cat (name, color) VALUES ('alice', 'green');
+-- psql -U demo -d cats -c "INSERT INTO cat (name, color) VALUES ('Bob', 'Rot');"
 
-select * from cat;
-delete from cat where name='bob' 
+
+CREATE TABLE cat
+(
+    cat_id serial PRIMARY KEY,
+    name VARCHAR ( 50 ) NOT NULL,
+    color VARCHAR ( 255 ) NOT NULL
+);
+
+INSERT INTO cat
+    (name, color)
+VALUES
+    ('Bob', 'Rot');
+INSERT INTO cat
+    (name, color)
+VALUES
+    ('alice', 'green');
+
+select *
+from cat;
+delete from cat where name='bob'
 
 --------------------------
 -- DOGS
 --------------------------
 
-CREATE TABLE dog (dog_id serial PRIMARY KEY, name VARCHAR ( 50 ) NOT NULL, color VARCHAR ( 255 ) NOT NULL);
+CREATE TABLE dog
+(
+    dog_id serial PRIMARY KEY,
+    name VARCHAR ( 50 ) NOT NULL,
+    color VARCHAR ( 255 ) NOT NULL
+);
 
-INSERT INTO dog (name, color) VALUES ('bob', 'red');
-INSERT INTO dog (name, color) VALUES ('alice', 'green');
+INSERT INTO dog
+    (name, color)
+VALUES
+    ('bob', 'red');
+INSERT INTO dog
+    (name, color)
+VALUES
+    ('alice', 'green');
 
-select * from dog;
+select *
+from dog;
 delete from dog where name='bob' 

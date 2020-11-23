@@ -48,7 +48,7 @@ spec:
               value: "postgres-service"
             - name: PGDATABASE
               value: "cats"
-          image: linosthology/bachelor-thesis-example-backend:1.0
+          image: linosthology/bachelor-thesis-example-backend:1.2
           ports:
             - containerPort: 4000
           command: ["sh"]

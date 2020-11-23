@@ -52,12 +52,12 @@ const createCat = async ({ name, color }) => {
 const deleteCat = async ({ cat_id }) => {
     const client = new Client()
     await client.connect()
-    const res = await client.query(`DELETE FROM CAT WHERE cat_id='${cat_id}';`)
+    await client.query(`DELETE FROM CAT WHERE cat_id='${cat_id}';`)
     await client.end()
 }
 
 // Run the server!
-fastify.listen(process.env.PORT, process.env.HOST, function (err, address) {
+fastify.listen(process.env.PORT, '0.0.0.0', function (err, address) {
     if (err) {
         fastify.log.error(err)
         process.exit(1)
