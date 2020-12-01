@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "start": "PORT=4000 node app.js"
+    "start": "PORT=4000 PGUSER=demo PGPASSWORD=aGNGV1FnYjVnREpBNEVXdzhTcDcK PGHOST=localhost PGPORT=5432 PGDATABASE=cats node app.js"
   },
   "repository": {
     "type": "git",

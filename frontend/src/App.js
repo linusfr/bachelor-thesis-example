@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 
 import './App.css'
 
-const backendUrl = 'http://apitest.playground.zisops.com:4000/'
+const backendUrl = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/`
 
 class App extends Component {
     constructor(props) {

@@ -1,13 +1,19 @@
 # Use postgres/example user/password credentials
-version: "3.1"
+version: "3.8"
 
 services:
   db:
-    image: postgres
+    image: postgres:alpine
+    restart: unless-stopped
     ports:
-      - "6543:5432"
-    restart: always
+      - 127.0.0.1:${POSTGRES_PORT:-5432}:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d/
     environment:
       POSTGRES_USER: demo
-      POSTGRES_PASSWORD: hcFWQgb5gDJA4EWw8Sp7
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-aGNGV1FnYjVnREpBNEVXdzhTcDcK}
       POSTGRES_DB: cats
+
+volumes:
+  postgres:
