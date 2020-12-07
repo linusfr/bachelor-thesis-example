@@ -15,11 +15,7 @@ services:
       POSTGRES_DB: cats
 
   app:
-    build:
-      context: .
-      args:
-        API_HOST: l1nus.duckdns.org
-        API_PORT: 3000
+    image: linosthology/bachelor-thesis-example-combined:1.1
     restart: on-failure
     ports:
       - ${PORT:-3000}:3000
