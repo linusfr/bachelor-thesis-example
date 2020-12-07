@@ -6,17 +6,16 @@ const { Client } = require('pg')
 const fastify = require('fastify')({
     logger: true,
 })
+const path = require('path')
 
-fastify.register(require('fastify-cors'), {
-    // put your options here
+fastify.register(require('fastify-static'), {
+    root: path.join(__dirname, 'build'),
 })
 
-// Declare a route
-fastify.get('/', function (request, reply) {
-    reply.send({ hello: 'world' })
+fastify.get('/', function (req, reply) {
+    return reply.sendFile('index.html')
 })
 
-// Declare a route
 fastify.get('/cats', async function (request, reply) {
     let cats = await getCats()
     reply.send(cats)
@@ -35,7 +34,9 @@ fastify.delete('/cat', async function (request, reply) {
 const getCats = async () => {
     const client = new Client()
     await client.connect()
+
     const res = await client.query('SELECT * FROM cat;')
+
     await client.end()
     return res.rows
 }
@@ -43,16 +44,22 @@ const getCats = async () => {
 const createCat = async ({ name, color }) => {
     const client = new Client()
     await client.connect()
-    await client.query(
-        `INSERT INTO cat (name, color) VALUES ('${name}', '${color}');`
-    )
+
+    const text = 'INSERT INTO cat(name, color) VALUES($1, $2)'
+    const values = [name, color]
+    await client.query(text, values)
+
     await client.end()
 }
 
 const deleteCat = async ({ cat_id }) => {
     const client = new Client()
     await client.connect()
-    await client.query(`DELETE FROM CAT WHERE cat_id='${cat_id}';`)
+
+    const text = 'DELETE FROM CAT WHERE cat_id=$1;'
+    const values = [cat_id]
+    await client.query(text, values)
+
     await client.end()
 }
 

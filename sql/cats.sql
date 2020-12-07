@@ -9,7 +9,6 @@ INSERT INTO cat
     (name, color)
 VALUES
     ('Bob', 'Rot');
-
 INSERT INTO cat
     (name, color)
 VALUES

@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "start": "PORT=4000 PGUSER=demo PGPASSWORD=aGNGV1FnYjVnREpBNEVXdzhTcDcK PGHOST=localhost PGPORT=5432 PGDATABASE=cats node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/linusfr/bachelor-thesis-example#readme",
   "dependencies": {
     "fastify": "^3.8.0",
-    "fastify-cors": "^4.1.0",
+    "fastify-static": "^3.3.0",
     "pg": "^8.5.1"
   }
 }
