@@ -1,27 +1,23 @@
 # --------------------------
 # build react app
 # --------------------------
-FROM node:15.2.0-alpine3.10
+FROM node:15-alpine as builder
 
 # set working directory
 WORKDIR /app
 
 # add environment variables
-ARG API_HOST
-ENV REACT_APP_API_HOST $API_HOST
-ARG API_PORT
-ENV REACT_APP_API_PORT $API_PORT
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+ARG API_HOST=l1nus.duckdns.org
+ARG API_PORT=4000
+ENV REACT_APP_API_HOST=$API_HOST \
+    REACT_APP_API_PORT=$API_PORT
 
 # add dependencies
-COPY ./app/package.json .
-COPY ./app/package-lock.json .
+COPY ./app/package*.json ./
 
 # install dependencies
-RUN npm install --silent
 RUN npm install react-scripts@4.0.0 -g --silent
+RUN npm install --silent
 
 # add app
 COPY ./app/public ./public
@@ -31,31 +27,25 @@ COPY ./app/src ./src
 RUN npm run build
 
 # --------------------------
-# build fastify
+# build fastify and run image
 # --------------------------
-FROM node:15.2.0-alpine3.10
+FROM node:15-alpine
+
+ENV PORT=3000
 
 # set working directory
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-COPY --from=0 /app/build ./build
+COPY --from=builder /app/build ./build
 
 # add dependencies
-COPY ./server/package.json .
-COPY ./server/package-lock.json .
+COPY ./server/package*.json ./
 
 # install dependencies
 RUN npm install --silent
 
 # add app
 COPY ./server/app.js .
-
-# --------------------------
-# start fastify
-# --------------------------
 
 # start app
 CMD ["node", "app.js"]
