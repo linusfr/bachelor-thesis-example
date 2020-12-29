@@ -1,34 +1,34 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
-  namespace: linus
+  name: cats-service
+  namespace: cats
   labels:
-    app: backend
+    app: cats
 spec:
   type: LoadBalancer
   ports:
-    - port: 4000
+    - port: 4001
       targetPort: 4000
   selector:
-    app: backend
+    app: cats
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment
-  namespace: linus
+  name: cats-deployment
+  namespace: cats
   labels:
-    app: backend
+    app: cats
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: cats
   template:
     metadata:
       labels:
-        app: backend
+        app: cats
     spec:
       volumes:
         - name: db-password
@@ -36,7 +36,7 @@ spec:
             secretName: postgres-password-secret
             defaultMode: 0600
       containers:
-        - name: backend
+        - name: cats
           volumeMounts:
             - name: db-password
               mountPath: "/etc/db_password"
@@ -48,7 +48,7 @@ spec:
               value: "postgres-service"
             - name: PGDATABASE
               value: "cats"
-          image: linosthology/bachelor-thesis-example-backend:1.2
+          image: linosthology/bachelor-thesis-example-combined-l1nus:1.0
           ports:
             - containerPort: 4000
           command: ["sh"]
