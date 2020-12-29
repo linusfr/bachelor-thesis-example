@@ -9,7 +9,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 4001
-      targetPort: 4000
+      targetPort: 4001
   selector:
     app: cats
 ---
@@ -30,36 +30,24 @@ spec:
       labels:
         app: cats
     spec:
-      volumes:
-        - name: db-password
-          secret:
-            secretName: postgres-password-secret
-            defaultMode: 0600
       containers:
         - name: cats
-          volumeMounts:
-            - name: db-password
-              mountPath: "/etc/db_password"
-              readOnly: true
           env:
             - name: PGUSER
               value: "demo"
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password-secret
+                  key: password
+
             - name: PGHOST
               value: "postgres-service"
             - name: PGDATABASE
               value: "cats"
-          image: linosthology/bachelor-thesis-example-combined-l1nus:1.0
+            - name: PORT
+              value: "4001"
+
+          image: linosthology/bachelor-thesis-example-combined-4001:1.0
           ports:
-            - containerPort: 4000
-          command: ["sh"]
-          args: [
-              "-c",
-              '
-              echo "*:*:*:*:$(cat /etc/db_password/password)"
-              > ~/.pgpass
-              &&
-              chmod 0600 ~/.pgpass
-              &&
-              PORT=4000 node app.js
-              ',
-            ]
+            - containerPort: 4001
