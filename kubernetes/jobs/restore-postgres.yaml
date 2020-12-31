@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: postgres-restore-job
+  namespace: cats
 spec:
   template:
     spec:
