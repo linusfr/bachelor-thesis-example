@@ -1,15 +1,11 @@
 version: "3.3"
 
 services:
-  backup-cats-cronjob:
+  restore-cats-postgres:
     image: postgres:alpine
     deploy:
-      mode: replicated
-      replicas: 0
-      labels:
-        - "swarm.cronjob.enable=true"
-        - "swarm.cronjob.schedule=0 1 * * *"
-        - "swarm.cronjob.skip-running=false"
+      mode: replicated-job
+      replicas: 1
       restart_policy:
         condition: none
     volumes:
@@ -19,7 +15,7 @@ services:
       PGPASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
       PGHOST: db
       PGDATABASE: cats
-    command: bash -c 'echo "*:*:*:*:$${PGPASSWORD}" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_dump --verbose --no-owner --format=custom --file=/backup/$${PGDATABASE}.sql.gz'
+    command: bash -c 'echo "*:*:*:*:$${PGPASSWORD}" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_restore --verbose --no-owner --clean --if-exists --dbname=$${PGDATABASE} /backup/$${PGDATABASE}.sql.gz'
 
 volumes:
   postgres-backup-restore-volume:
