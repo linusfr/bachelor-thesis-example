@@ -3,21 +3,28 @@ version: "3.3"
 services:
   backup-cronjob:
     image: postgres:alpine
-    restart: unless-stopped
-    ports:
-      - 127.0.0.1:${POSTGRES_PORT:-5432}:5432
+    deploy:
+      mode: replicated
+      replicas: 0
+      labels:
+        - "swarm.cronjob.enable=true"
+        - "swarm.cronjob.schedule=* * * * *"
+        - "swarm.cronjob.skip-running=false"
+      restart_policy:
+        condition: none
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ../sql:/docker-entrypoint-initdb.d/
+      - postgres-backup-restore-volume:/backup
     environment:
       POSTGRES_USER: demo
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
-      POSTGRES_DB: cats
+      PGPASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
+      PGHOST: db
+      PGDATABASE: cats
+    command: bash -c 'echo "*:*:*:*:$(PGPASSWORD)" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_dump --verbose --no-owner --format=custom --file=/backup/$(PGDATABASE).sql.gz'
 
 volumes:
-  postgres-data:
+  postgres-backup-restore-volume:
     driver: local
     driver_opts:
       type: nfs
       o: nfsvers=4,addr=192.168.178.35,rw
-      device: ":/srv/nfs/postgres-data-cats"
+      device: ":/srv/nfs/postgres-backup-cats-swarm"

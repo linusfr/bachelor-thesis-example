@@ -118,6 +118,11 @@ spec:
             - name: postgres
               image: postgres:13-alpine
               env:
+                - name: PGUSER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: postgres-configmap
+                      key: user
                 - name: PGPASSWORD
                   valueFrom:
                     secretKeyRef:
@@ -133,11 +138,6 @@ spec:
                     configMapKeyRef:
                       name: postgres-configmap
                       key: dbname
-                - name: PGUSER
-                  valueFrom:
-                    configMapKeyRef:
-                      name: postgres-configmap
-                      key: user
               volumeMounts:
                 - name: nfs-backup-volume
                   mountPath: /backup
