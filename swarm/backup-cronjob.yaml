@@ -19,7 +19,7 @@ services:
       PGPASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
       PGHOST: db
       PGDATABASE: cats
-    command: bash -c 'echo "*:*:*:*:$PGPASSWORD}" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_dump --verbose --no-owner --format=custom --file=/backup/$PGDATABASE).sql.gz'
+    command: bash -c 'echo "*:*:*:*:$PGPASSWORD}" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_dump --verbose --no-owner --format=custom --file=/backup/${PGDATABASE}.sql.gz'
 
 volumes:
   postgres-backup-restore-volume:
@@ -28,3 +28,8 @@ volumes:
       type: nfs
       o: nfsvers=4,addr=192.168.178.35,rw
       device: ":/srv/nfs/postgres-backup-cats-swarm"
+
+networks:
+  default:
+    external:
+      name: cats_default
