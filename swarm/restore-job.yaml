@@ -3,11 +3,8 @@ version: "3.3"
 services:
   restore-cats-postgres:
     image: postgres:alpine
-    deploy:
-      mode: replicated-job
-      replicas: 1
-      restart_policy:
-        condition: none
+    mode: replicated-job
+    replicas: 1
     volumes:
       - postgres-backup-restore-volume:/backup
     environment:
