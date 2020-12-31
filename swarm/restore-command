@@ -1,0 +1,12 @@
+docker service create --env PGUSER=demo \
+    --env PGPASSWORD=hcFWQgb5gDJA4EWw8Sp7 \
+    --env PGHOST=db \
+    --env PGDATABASE=cats \
+    --mode replicated-job \
+    --network cats_default \
+    --mount type=volume,
+    --driver local \
+    --opt type=nfs \
+    --opt o=addr=192.168.1.1,rw \
+    --opt device=:/path/to/dir \
+    postgres:alpine
