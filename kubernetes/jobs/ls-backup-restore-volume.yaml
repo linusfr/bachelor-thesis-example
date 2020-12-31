@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ls-backup-volume-job
+spec:
+  template:
+    spec:
+      volumes:
+        - name: nfs-backup-volume
+          nfs:
+            server: 192.168.178.35
+            path: /srv/nfs/postgres-backup-cats-kubernetes
+      containers:
+        - name: postgres
+          image: postgres:13-alpine
+          volumeMounts:
+            - name: nfs-backup-volume
+              mountPath: /backup
+          command: ["ls"]
+          args: ["-la", "/backup"]
+      restartPolicy: Never
+  backoffLimit: 1

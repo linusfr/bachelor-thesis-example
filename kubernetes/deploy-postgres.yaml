@@ -93,67 +93,69 @@ spec:
         resources:
           requests:
             storage: 2Gi
-# ---
-# apiVersion: batch/v1beta1
-# kind: CronJob
-# metadata:
-#   name: postgres-backup-cronjob
-#     namespace: cats
-# spec:
-#   schedule: "* 2 * * *"
-#   jobTemplate:
-#     spec:
-#       template:
-#         spec:
-#           volumes:
-#             - name: nfs-backup-volume
-#               nfs:
-#                 server: 192.168.0.39
-#                 path: /home/xenon/kubernetes/backup
-#             - name: db-password
-#               secret:
-#                 secretName: postgres-password-secret
-#                 defaultMode: 0600
-#           containers:
-#             - name: postgres
-#               image: postgres:13-alpine
-#               env:
-#                 - name: PGHOST
-#                   valueFrom:
-#                     configMapKeyRef:
-#                       name: postgres-configmap
-#                       key: host
-#                 - name: PGDATABASE
-#                   valueFrom:
-#                     configMapKeyRef:
-#                       name: postgres-configmap
-#                       key: dbname
-#                 - name: PGUSER
-#                   valueFrom:
-#                     configMapKeyRef:
-#                       name: postgres-configmap
-#                       key: user
-#               volumeMounts:
-#                 - name: nfs-backup-volume
-#                   mountPath: /backup
-#                 - name: db-password
-#                   mountPath: "/etc/db_password"
-#                   readOnly: true
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: postgres-backup-cronjob
+  namespace: cats
+spec:
+  schedule: "* 2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: nfs-backup-volume
+              nfs:
+                server: 192.168.178.35
+                path: /srv/nfs/postgres-backup-cats-kubernetes
+            - name: db-password
+              secret:
+                secretName: postgres-password-secret
+                defaultMode: 0600
+          containers:
+            - name: postgres
+              image: postgres:13-alpine
+              env:
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-password-secret
+                      key: password
+                - name: PGHOST
+                  valueFrom:
+                    configMapKeyRef:
+                      name: postgres-configmap
+                      key: host
+                - name: PGDATABASE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: postgres-configmap
+                      key: dbname
+                - name: PGUSER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: postgres-configmap
+                      key: user
+              volumeMounts:
+                - name: nfs-backup-volume
+                  mountPath: /backup
 
-#               command: ["bash"]
-#               args: [
-#                   "-c",
-#                   '
-#                   echo "*:*:*:*:$(cat /etc/db_password/password)"
-#                   > ~/.pgpass
-#                   &&
-#                   chmod 0600 ~/.pgpass
-#                   &&
-#                   pg_dump
-#                   --verbose
-#                   --no-owner
-#                   --format=custom
-#                   --file=/backup/$(PGDATABASE).sql.gz
-#                   ',
-#                 ]
-#           restartPolicy: Never
+              command: ["bash"]
+              args: [
+                  "-c",
+                  '
+                  echo "*:*:*:*:$(PGPASSWORD)"
+                  > ~/.pgpass
+                  &&
+                  chmod 0600 ~/.pgpass
+                  &&
+                  pg_dump
+                  --verbose
+                  --no-owner
+                  --format=custom
+                  --file=/backup/$(PGDATABASE).sql.gz
+                  ',
+                ]
+          restartPolicy: Never
