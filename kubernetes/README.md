@@ -4,7 +4,7 @@
 
 ```
 pg_dump --verbose --format=custom --no-owner --file=/mnt/backup/element-lns.sql.gz element-lns
-pg_dump --verbose --format=custom --no-owner --file=/mnt/backup/element-iot.sql.gz element-iot
+pg_dump --verbose --format=custom --no-owner --file=/mnt/backup/example-database.sql.gz example-database
 ```
 
 ## restore
@@ -12,15 +12,15 @@ pg_dump --verbose --format=custom --no-owner --file=/mnt/backup/element-iot.sql.
 ```
 pg_restore --schema-only  --clean --if-exists --no-owner --dbname=element-lns /mnt/backup/element-lns.sql.gz
 pg_restore --data-only --disable-triggers --no-owner --dbname=element-lns /mnt/backup/element-lns.sql.gz
-pg_restore --schema-only  --clean --if-exists --no-owner --dbname=element-iot /mnt/backup/element-iot.sql.gz
-pg_restore --data-only --disable-triggers --no-owner --dbname=element-iot /mnt/backup/element-iot.sql.gz
+pg_restore --schema-only  --clean --if-exists --no-owner --dbname=example-database /mnt/backup/example-database.sql.gz
+pg_restore --data-only --disable-triggers --no-owner --dbname=example-database /mnt/backup/example-database.sql.gz
 ```
 
 ## user permissions
 
 ```
-create user 'element-iot' with encrypted password 'mypassword';
-grant all privileges on database 'element-iot' to 'element-iot';
+create user 'example-database' with encrypted password 'mypassword';
+grant all privileges on database 'example-database' to 'example-database';
 create user 'element-lns' with encrypted password 'myOtherpassword';
 grant all privileges on database 'element-lns' to 'element-lns';
 ```
