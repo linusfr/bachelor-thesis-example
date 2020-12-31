@@ -3,7 +3,7 @@ version: "3.3"
 services:
   restore-cats-postgres:
     image: postgres:alpine\
-    deployment:
+    deploy:
       mode: replicated-job
       replicas: 1
     volumes:
