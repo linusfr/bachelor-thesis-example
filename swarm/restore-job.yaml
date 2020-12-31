@@ -10,7 +10,7 @@ services:
       PGPASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
       PGHOST: db
       PGDATABASE: cats
-    restart: never
+    restart: "no"
     command: bash -c 'echo "*:*:*:*:$${PGPASSWORD}" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_restore --verbose --no-owner --clean --if-exists --dbname=$${PGDATABASE} /backup/$${PGDATABASE}.sql.gz'
 
 volumes:
