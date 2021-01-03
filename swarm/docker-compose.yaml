@@ -45,7 +45,7 @@ services:
       bash -c
       'POSTGRES_USER=$$(cat $$POSTGRES_USER_FILE)
       POSTGRES_DB=$$(cat $$POSTGRES_USER_FILE)
-      && sh docker-entrypoint.sh'
+      && ./docker-entrypoint.sh'
 
 volumes:
   postgres-data:
