@@ -39,15 +39,9 @@ services:
     secrets:
       - postgres-password
     environment:
-      PG_USER_FILE: /postgres-user
-      PG_PASSWORD_FILE: /run/secrets/postgres-password
-      PG_DB_FILE: /postgres-db
-
-    command: >
-      'POSTGRES_USER=$$(cat $$PG_USER_FILE)
-      POSTGRES_PASSWORD=$$(cat $$PG_PASSWORD_FILE)
-      POSTGRES_DB=$$(cat $$PG_DB_FILE)
-      postgres'
+      POSTGRES_USER_FILE: /postgres-user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      POSTGRES_DB_FILE: /postgres-db
 
 volumes:
   postgres-data:
