@@ -22,9 +22,9 @@ services:
     command: >
       sh -c
       'TEST=blub
-      PGUSER=$$(cat $$POSTGRES_USER_FILE)
-      PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
-      PGDATABASE=$$(cat $$POSTGRES_DB_FILE)
+      PGUSER=$(</postgres-user)
+      PGPASSWORD=$(</run/secrets/postgres-password)
+      PGDATABASE=$(</postgres-db)
       node app.js'
 
   db:
