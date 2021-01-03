@@ -3,12 +3,12 @@ docker service create   --name restore-cats \
                         --replicas 1 \
                         --max-concurrent 1 \
                         --network cats_default \
-                        --env PGUSER=demo \
-                        --env PGPASSWORD=hcFWQgb5gDJA4EWw8Sp7 \
                         --env PGHOST=db \
-                        --env PGDATABASE=cats \
+                        --config cats_postgres-user \
+                        --config cats_postgres-db \
+                        --secret cats_postgres-password \
                         --mount 'type=volume,dst=/backup,volume-driver=local,volume-opt=type=nfs,volume-opt=device=:/srv/nfs/postgres-backup-cats-swarm,"volume-opt=o=addr=192.168.178.35,nfsvers=4,rw"' \
-                          postgres:alpine bash -c 'echo "*:*:*:*:${PGPASSWORD}" > ~/.pgpass \
+                          postgres:alpine bash -c 'export PGUSER=$(cat /cats_postgres-user) PGDATABASE=$(cat /cats_postgres-db) && echo "*:*:*:*:$(cat /run/secrets/cats_postgres-password)" > ~/.pgpass \
                             && chmod 0600 ~/.pgpass \
                             && pg_restore \
                               --verbose \
