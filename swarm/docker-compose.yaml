@@ -21,8 +21,8 @@ services:
     command: <
       bash -c
       'PGUSER=$$(cat $$POSTGRES_USER_FILE)
-      PGPASSWORD=$$(cat $$POSTGRES_DB_FILE)
-      PGDATABASE=$$(cat $$POSTGRES_USER_FILE)
+      PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
+      PGDATABASE=$$(cat $$POSTGRES_DB_FILE)
       && node app.js'
 
   db:
@@ -39,12 +39,16 @@ services:
       - postgres-password
     environment:
       POSTGRES_USER: demo
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
       POSTGRES_DB: cats
+
+      POSTGRES_USER_FILE: /postgres-user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      POSTGRES_DB_FILE: /postgres-db
+
     command: <
       bash -c
       'POSTGRES_USER=$$(cat $$POSTGRES_USER_FILE)
-      POSTGRES_DB=$$(cat $$POSTGRES_USER_FILE)
+      POSTGRES_DB=$$(cat $$POSTGRES_DB_FILE)
       && ./docker-entrypoint.sh'
 
 volumes:
