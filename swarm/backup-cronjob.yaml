@@ -28,7 +28,7 @@ services:
       POSTGRES_DB_FILE: /cats_postgres-db
 
     command: >
-      sh -c 
+      bash -c 
         'PGUSER=$$(cat $$POSTGRES_USER_FILE)
         PGDATABASE=$$(cat $$POSTGRES_DB_FILE)
         echo "*:*:*:*:$${cat $$POSTGRES_PASSWORD_FILE}" > ~/.pgpass 
