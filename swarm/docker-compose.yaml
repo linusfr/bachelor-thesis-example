@@ -12,7 +12,7 @@ services:
       PGDATABASE: cats
 
       PGUSER: demo
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password.txt
     # command: <
     #   bash -c
     #   'PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
@@ -28,7 +28,7 @@ services:
       - ../sql:/docker-entrypoint-initdb.d/
     environment:
       POSTGRES_USER: demo
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password.txt
       # POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
       POSTGRES_DB: cats
     # command: <
