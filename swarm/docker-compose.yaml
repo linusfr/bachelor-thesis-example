@@ -17,7 +17,7 @@ services:
       PGDATABASE: cats
 
       PGUSER: demo
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password.txt
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
     # command: <
     #   bash -c
     #   'PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
@@ -25,7 +25,6 @@ services:
 
   db:
     image: postgres:alpine
-    restart: unless-stopped
     ports:
       - 127.0.0.1:${POSTGRES_PORT:-5432}:5432
     volumes:
@@ -38,7 +37,7 @@ services:
       - postgres-password
     environment:
       POSTGRES_USER: demo
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password.txt
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
       # POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
       POSTGRES_DB: cats
     # command: <
