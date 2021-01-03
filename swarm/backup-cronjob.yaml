@@ -29,7 +29,7 @@ services:
 
     command: >
       bash -c
-        'export PGUSER=$$(cat $$PG_USER_FILE) PGDATABASE=$$(cat $$PG_DB_FILE) echo "*:*:*:*:$$(cat $$PG_PASSWORD_FILE)" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_dump --verbose --no-owner --format=custom --file=/backup/$$(cat $$PG_DB_FILE).sql.gz'
+        'export PGUSER=$$(cat $$PG_USER_FILE) PGDATABASE=$$(cat $$PG_DB_FILE) && echo "*:*:*:*:$$(cat $$PG_PASSWORD_FILE)" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_dump --verbose --no-owner --format=custom --file=/backup/$$(cat $$PG_DB_FILE).sql.gz'
 
 volumes:
   postgres-backup-restore-volume:
