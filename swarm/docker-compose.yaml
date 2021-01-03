@@ -21,9 +21,9 @@ services:
 
     command: >
       sh -c
-      'PGUSER=$$(< $$POSTGRES_USER_FILE)
-      PGPASSWORD=$$(< $$POSTGRES_PASSWORD_FILE)
-      PGDATABASE=$$(< $$POSTGRES_DB_FILE)
+      'PGUSER=$$(<$$POSTGRES_USER_FILE)
+      PGPASSWORD=$$(<$$POSTGRES_PASSWORD_FILE)
+      PGDATABASE=$$(<$$POSTGRES_DB_FILE)
       node app.js'
 
   db:
