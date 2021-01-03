@@ -38,7 +38,6 @@ services:
     secrets:
       - postgres-password
     environment:
-      POSTGRES_USER: demo
       POSTGRES_DB: cats
 
       POSTGRES_USER_FILE: /postgres-user
