@@ -20,11 +20,12 @@ services:
       POSTGRES_DB_FILE: /postgres-db
 
     command: >
+      sh -c
+      'TEST=blub
       PGUSER=$$(cat $$POSTGRES_USER_FILE)
       PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
       PGDATABASE=$$(cat $$POSTGRES_DB_FILE)
-      sh -c
-      'node app.js'
+      node app.js'
 
   db:
     image: postgres:alpine
