@@ -15,17 +15,17 @@ services:
     volumes:
       - postgres-backup-restore-volume:/backup
     configs:
-      - postgres-user
-      - postgres-db
+      - cats_postgres-user
+      - cats_postgres-db
     secrets:
-      - postgres-password
+      - cats_postgres-password
 
     environment:
       PGHOST: db
 
-      POSTGRES_USER_FILE: /postgres-user
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
-      POSTGRES_DB_FILE: /postgres-db
+      POSTGRES_USER_FILE: /cats_postgres-user
+      POSTGRES_PASSWORD_FILE: /run/secrets/cats_postgres-password
+      POSTGRES_DB_FILE: /cats_postgres-db
 
     command: >
       sh -c 
@@ -54,11 +54,11 @@ networks:
       name: cats_default
 
 secrets:
-  postgres-password:
+  cats_postgres-password:
     external: true
 
 configs:
-  postgres-user:
+  cats_postgres-user:
     external: true
-  postgres-db:
+  cats_postgres-db:
     external: true
