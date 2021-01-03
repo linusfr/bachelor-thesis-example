@@ -47,7 +47,7 @@ services:
       'POSTGRES_USER=$$(cat $$PG_USER_FILE)
       PG_PASSWORD=$$(cat $$PG_PASSWORD_FILE)
       POSTGRES_DB=$$(cat $$PG_DB_FILE)
-      && sh /docker-entrypoint.sh'
+      && sh ./docker-entrypoint.sh'
 
 volumes:
   postgres-data:
