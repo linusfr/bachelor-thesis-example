@@ -31,13 +31,7 @@ services:
       bash -c
         'PGUSER=$$(cat $$POSTGRES_USER_FILE)
         PGDATABASE=$$(cat $$POSTGRES_DB_FILE)
-        echo "*:*:*:*:$$(cat $$POSTGRES_PASSWORD_FILE)" > ~/.pgpass 
-        && chmod 0600 ~/.pgpass 
-        && pg_dump 
-          --verbose 
-          --no-owner 
-          --format=custom 
-          --file=/backup/$${cat $$POSTGRES_DB_FILE}.sql.gz'
+        echo "*:*:*:*:$$(cat $$POSTGRES_PASSWORD_FILE)" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_dump --verbose --no-owner --format=custom --file=/backup/$$(cat $$POSTGRES_DB_FILE).sql.gz'
 
 volumes:
   postgres-backup-restore-volume:
