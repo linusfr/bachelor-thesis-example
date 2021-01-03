@@ -8,18 +8,37 @@ services:
       replicas: 0
       labels:
         - "swarm.cronjob.enable=true"
-        - "swarm.cronjob.schedule=0 1 * * *"
+        - "swarm.cronjob.schedule=* * * * *"
         - "swarm.cronjob.skip-running=false"
       restart_policy:
         condition: none
     volumes:
       - postgres-backup-restore-volume:/backup
+    configs:
+      - postgres-user
+      - postgres-db
+    secrets:
+      - postgres-password
+
     environment:
-      PGUSER: demo
-      PGPASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
       PGHOST: db
-      PGDATABASE: cats
-    command: bash -c 'echo "*:*:*:*:$${PGPASSWORD}" > ~/.pgpass && chmod 0600 ~/.pgpass && pg_dump --verbose --no-owner --format=custom --file=/backup/$${PGDATABASE}.sql.gz'
+
+      POSTGRES_USER_FILE: /postgres-user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      POSTGRES_DB_FILE: /postgres-db
+
+    command: >
+      sh -c 
+        'PGUSER=$$(cat $$POSTGRES_USER_FILE)
+        PGDATABASE=$$(cat $$POSTGRES_DB_FILE)
+        echo "*:*:*:*:$${cat $$POSTGRES_PASSWORD_FILE}" > ~/.pgpass 
+        && chmod 0600 ~/.pgpass 
+        && 
+          pg_dump 
+            --verbose 
+            --no-owner 
+            --format=custom 
+            --file=/backup/$${cat $$POSTGRES_DB_FILE}.sql.gz'
 
 volumes:
   postgres-backup-restore-volume:
@@ -33,3 +52,13 @@ networks:
   default:
     external:
       name: cats_default
+
+secrets:
+  postgres-password:
+    external: true
+
+configs:
+  postgres-user:
+    external: true
+  postgres-db:
+    external: true
