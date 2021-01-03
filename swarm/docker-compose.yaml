@@ -8,13 +8,16 @@ services:
       - ${PORT:-4000}:4000
     environment:
       PORT: 4000
-
       PGHOST: db
       PGPORT: 5432
       PGDATABASE: cats
 
       PGUSER: demo
-      PGPASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-passwd
+    command: <
+      bash -c
+      'PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
+      && node app.js'
 
   db:
     image: postgres:alpine
@@ -26,8 +29,13 @@ services:
       - ../sql:/docker-entrypoint-initdb.d/
     environment:
       POSTGRES_USER: demo
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-passwd
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
       POSTGRES_DB: cats
+    command: <
+      bash -c
+      'POSTGRES_PASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
+      && sh docker-entrypoint.sh'
 
 volumes:
   postgres-data:
@@ -36,3 +44,13 @@ volumes:
       type: nfs
       o: nfsvers=4,addr=192.168.178.35,rw
       device: ":/srv/nfs/postgres-data-cats"
+
+secrets:
+  postgres-passwd:
+    file: secrets/postgres-password.txt
+
+configs:
+  postgres-user:
+    file: configs/postgres-user.txt
+  postgres-db:
+    file: configs/postgres-db.txt
