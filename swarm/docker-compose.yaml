@@ -13,10 +13,10 @@ services:
 
       PGUSER: demo
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
-    command: <
-      bash -c
-      'PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
-      && node app.js'
+    # command: <
+    #   bash -c
+    #   'PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
+    #   && node app.js'
 
   db:
     image: postgres:alpine
@@ -31,10 +31,10 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hcFWQgb5gDJA4EWw8Sp7}
       POSTGRES_DB: cats
-    command: <
-      bash -c
-      'POSTGRES_PASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
-      && sh docker-entrypoint.sh'
+    # command: <
+    #   bash -c
+    #   'POSTGRES_PASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
+    #   && sh docker-entrypoint.sh'
 
 volumes:
   postgres-data:
