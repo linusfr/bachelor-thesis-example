@@ -19,7 +19,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
       POSTGRES_DB_FILE: /postgres-db
     command: >
-      bash -c
+      sh -c
       'PGUSER=$$(cat $$POSTGRES_USER_FILE)
       PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
       PGDATABASE=$$(cat $$POSTGRES_DB_FILE)
