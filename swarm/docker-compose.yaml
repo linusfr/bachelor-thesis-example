@@ -43,13 +43,11 @@ services:
       PG_PASSWORD_FILE: /run/secrets/postgres-password
       PG_DB_FILE: /postgres-db
 
-    entrypoint: /bin/sh -c
-
     command: >
       'POSTGRES_USER=$$(cat $$PG_USER_FILE)
       POSTGRES_PASSWORD=$$(cat $$PG_PASSWORD_FILE)
       POSTGRES_DB=$$(cat $$PG_DB_FILE)
-      docker-entrypoint.sh'
+      postgres'
 
 volumes:
   postgres-data:
