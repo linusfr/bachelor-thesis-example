@@ -16,5 +16,4 @@ docker service create   --name restore-cats \
                             --no-owner \
                             --clean \
                             --if-exists \
-                            --password \
                             --dbname=$(</cats_postgres-db) /backup/$(</cats_postgres-db).sql.gz'

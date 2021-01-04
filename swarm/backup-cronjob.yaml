@@ -28,15 +28,15 @@ services:
 
     command: >
       sh -c '
-      export PGUSER=$$(cat /cats_postgres-user) &&
-      export PGDATABASE=$$(cat /cats_postgres-db) &&
-      echo "*:*:*:*:$$(cat /run/secrets/cats_postgres-password)" > ~/.pgpass &&
+      PGPASSWORD=$$(cat /run/secrets/cats_postgres-password)
       chmod 0600 ~/.pgpass &&
       pg_dump
+      --dbname=$$(cat /cats_postgres-db)
+      --username=$$(cat /cats_postgres-user)
       --verbose
       --no-owner
       --format=custom
-      --file=/backup/$${PGDATABASE}.sql.gz'
+      --file=/backup/$$(cat /cats_postgres-db).sql.gz'
 
 volumes:
   postgres-backup-restore-volume:
