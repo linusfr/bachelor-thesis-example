@@ -11,6 +11,7 @@ services:
     secrets:
       - postgres-password
     environment:
+      PGHOST: db
       PORT: 4000
       PGPORT: 5432
     networks:
