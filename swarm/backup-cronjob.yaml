@@ -29,7 +29,6 @@ services:
     command: >
       sh -c '
       PGPASSWORD=$$(cat /run/secrets/cats_postgres-password)
-      chmod 0600 ~/.pgpass &&
       pg_dump
       --dbname=$$(cat /cats_postgres-db)
       --username=$$(cat /cats_postgres-user)
