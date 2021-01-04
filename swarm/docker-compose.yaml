@@ -16,9 +16,9 @@ services:
       PGPORT: 5432
     command: >
       sh -c '
-      PGUSER=$$(</postgres-user)
-      PGPASSWORD=$$(</run/secrets/postgres-password)
-      PGDATABASE=$$(</postgres-db)
+      PGUSER=$$(cat /postgres-user)
+      PGPASSWORD=$$(cat /run/secrets/postgres-password)
+      PGDATABASE=$$(cat /postgres-db)
       node app.js'
 
   db:
