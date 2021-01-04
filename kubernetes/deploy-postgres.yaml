@@ -145,17 +145,12 @@ spec:
               command: ["bash"]
               args: [
                   "-c",
-                  '
-                  echo "*:*:*:*:$(PGPASSWORD)"
-                  > ~/.pgpass
-                  &&
-                  chmod 0600 ~/.pgpass
-                  &&
+                  "
                   pg_dump
                   --verbose
                   --no-owner
                   --format=custom
                   --file=/backup/$(PGDATABASE).sql.gz
-                  ',
+                  ",
                 ]
           restartPolicy: Never

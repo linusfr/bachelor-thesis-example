@@ -41,12 +41,7 @@ spec:
           command: ["bash"]
           args: [
               "-c",
-              '
-              echo "*:*:*:*:$(PGPASSWORD)"
-              > ~/.pgpass
-              &&
-              chmod 0600 ~/.pgpass
-              &&
+              "
               echo schema restoration starting
               &&
               pg_restore
@@ -71,7 +66,7 @@ spec:
               /backup/$(PGDATABASE).sql.gz
               &&
               echo data successfully restored
-              ',
+              ",
             ]
       restartPolicy: Never
   backoffLimit: 1
