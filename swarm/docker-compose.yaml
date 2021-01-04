@@ -14,6 +14,8 @@ services:
       PORT: 4000
       PGHOST: db
       PGPORT: 5432
+    networks:
+      - cats
     command: >
       sh -c '
       PGUSER=$$(cat /postgres-user)
@@ -37,6 +39,8 @@ services:
       POSTGRES_USER_FILE: /postgres-user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
       POSTGRES_DB_FILE: /postgres-db
+    networks:
+      - cats
 
 volumes:
   postgres-data:
