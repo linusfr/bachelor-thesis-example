@@ -23,6 +23,9 @@ services:
     environment:
       PGHOST: db
 
+    networks:
+      - cats_cats
+
     command: >
       sh -c '
       export PGUSER=$$(cat /cats_postgres-user) &&
