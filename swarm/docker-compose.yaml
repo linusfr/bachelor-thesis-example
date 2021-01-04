@@ -3,8 +3,6 @@ version: "3.8"
 services:
   app:
     image: linosthology/bachelor-thesis-example-combined-l1nus:1.0
-    env_file:
-      - .env
     ports:
       - 4000
     configs:
@@ -12,6 +10,9 @@ services:
       - postgres-db
     secrets:
       - postgres-password
+    environment:
+      PORT: 4000
+      PGPORT: 5432
     networks:
       - cats
     command: >
@@ -33,8 +34,10 @@ services:
       - postgres-db
     secrets:
       - postgres-password
-    env_file:
-      - .env
+    environment:
+      POSTGRES_USER_FILE: /postgres-user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      POSTGRES_DB_FILE: /postgres-db
     networks:
       - cats
 

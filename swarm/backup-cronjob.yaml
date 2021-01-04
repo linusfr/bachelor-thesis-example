@@ -19,8 +19,8 @@ services:
       - cats_postgres-db
     secrets:
       - cats_postgres-password
-    env_file:
-      - .env
+    environment:
+      PGHOST: db
     networks:
       - cats_cats
     command: >
