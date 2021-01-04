@@ -3,7 +3,7 @@ docker service create   --name restore-cats \
                         --replicas 1 \
                         --max-concurrent 1 \
                         --network cats_cats \
-                        --env PGHOST=db \
+                        --env-file .env \
                         --config cats_postgres-user \
                         --config cats_postgres-db \
                         --secret cats_postgres-password \

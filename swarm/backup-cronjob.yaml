@@ -19,13 +19,10 @@ services:
       - cats_postgres-db
     secrets:
       - cats_postgres-password
-
-    environment:
-      PGHOST: db
-
+    env_file:
+      - .env
     networks:
       - cats_cats
-
     command: >
       sh -c '
       PGPASSWORD=$$(cat /run/secrets/cats_postgres-password)
