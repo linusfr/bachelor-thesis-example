@@ -12,12 +12,12 @@ services:
       - postgres-password
     environment:
       PORT: 4000
-      PGHOST: db
       PGPORT: 5432
     networks:
       - cats
     command: >
       sh -c '
+      PGHOST=$$(cat /postgres-host)
       PGUSER=$$(cat /postgres-user)
       PGPASSWORD=$$(cat /run/secrets/postgres-password)
       PGDATABASE=$$(cat /postgres-db)
@@ -33,6 +33,7 @@ services:
     configs:
       - postgres-user
       - postgres-db
+      - postgres-host
     secrets:
       - postgres-password
     environment:
@@ -59,6 +60,8 @@ configs:
     file: configs/postgres-user.txt
   postgres-db:
     file: configs/postgres-db.txt
+  postgres-host:
+    file: configs/postgres-host.txt
 
 networks:
   cats:
