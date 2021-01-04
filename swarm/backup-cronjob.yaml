@@ -48,8 +48,7 @@ volumes:
 
 networks:
   default:
-    external:
-      name: cats_cats
+    name: cats_cats
 
 secrets:
   cats_postgres-password:
