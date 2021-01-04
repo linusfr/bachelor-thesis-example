@@ -23,9 +23,6 @@ services:
     environment:
       PGHOST: db
 
-    networks:
-      - cats
-
     command: >
       sh -c '
       export
@@ -48,7 +45,9 @@ volumes:
       device: ":/srv/nfs/postgres-backup-cats-swarm"
 
 networks:
-  cats:
+  default:
+    external:
+      name: cats_cats
 
 secrets:
   cats_postgres-password:
