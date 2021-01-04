@@ -25,6 +25,8 @@ services:
 
     command: >
       sh -c '
+      ls -la / &&
+      cat /cats_postgres-user &&
       export
         PGUSER=$$(cat /cats_postgres-user)
         PGDATABASE=$$(cat /cats_postgres-db) &&
