@@ -31,11 +31,11 @@ services:
       export PGDATABASE=$$(cat /cats_postgres-db) &&
       echo "*:*:*:*:$$(cat /run/secrets/cats_postgres-password)" > ~/.pgpass &&
       chmod 0600 ~/.pgpass &&
-      pg_dump 
-        --verbose
-        --no-owner
-        --format=custom
-        --file=/backup/$${PGDATABASE}.sql.gz'
+      pg_dump
+      --verbose
+      --no-owner
+      --format=custom
+      --file=/backup/$${PGDATABASE}.sql.gz'
 
 volumes:
   postgres-backup-restore-volume:
