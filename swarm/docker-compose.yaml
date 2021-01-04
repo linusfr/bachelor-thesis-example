@@ -14,16 +14,11 @@ services:
       PORT: 4000
       PGHOST: db
       PGPORT: 5432
-
-      POSTGRES_USER_FILE: /postgres-user
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
-      POSTGRES_DB_FILE: /postgres-db
-
     command: >
       sh -c
-      'PGUSER=$$(cat $$POSTGRES_USER_FILE)
-      PGPASSWORD=$$(cat $$POSTGRES_PASSWORD_FILE)
-      PGDATABASE=$$(cat $$POSTGRES_DB_FILE)
+      'PGUSER=$$(cat /postgres-user)
+      PGPASSWORD=$$(cat /run/secrets/postgres-password)
+      PGDATABASE=$$(cat /postgres-db)
       node app.js'
 
   db:
