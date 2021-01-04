@@ -55,3 +55,6 @@ configs:
     file: configs/postgres-user.txt
   postgres-db:
     file: configs/postgres-db.txt
+
+networks:
+  cats:

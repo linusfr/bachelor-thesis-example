@@ -23,16 +23,12 @@ services:
     environment:
       PGHOST: db
 
-      PG_USER_FILE: /cats_postgres-user
-      PG_PASSWORD_FILE: /run/secrets/cats_postgres-password
-      PG_DB_FILE: /cats_postgres-db
-
     command: >
       bash -c
         'export
-          PGUSER=$$(cat $$PG_USER_FILE) 
-          PGDATABASE=$$(cat $$PG_DB_FILE) 
-        && echo "*:*:*:*:$$(cat $$PG_PASSWORD_FILE)" > ~/.pgpass 
+          PGUSER=$$(cat /cats_postgres-user) 
+          PGDATABASE=$$(cat /cats_postgres-db) 
+        && echo "*:*:*:*:$$(cat /run/secrets/cats_postgres-password)" > ~/.pgpass 
         && chmod 0600 ~/.pgpass 
         && pg_dump 
           --verbose 
