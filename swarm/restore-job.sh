@@ -8,7 +8,7 @@ docker service create   --name restore-cats \
                         --config cats_postgres-db \
                         --secret cats_postgres-password \
                         --mount 'type=volume,dst=/backup,volume-driver=local,volume-opt=type=nfs,volume-opt=device=:/srv/nfs/postgres-backup-cats-swarm,"volume-opt=o=addr=192.168.178.35,nfsvers=4,rw"' \
-                        postgres:alpine bash -c '
+                        postgres:alpine sh -c '
                           PGPASSWORD=$(</run/secrets/cats_postgres-password) \
                           pg_restore \
                             --username=$(</cats_postgres-user) \
