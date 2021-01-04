@@ -27,9 +27,8 @@ services:
       sh -c '
       ls -la / &&
       cat /cats_postgres-user &&
-      export
-        PGUSER=$$(cat /cats_postgres-user)
-        PGDATABASE=$$(cat /cats_postgres-db) &&
+      export PGUSER=$$(cat /cats_postgres-user) &&
+      export PGDATABASE=$$(cat /cats_postgres-db) &&
       echo "*:*:*:*:$$(cat /run/secrets/cats_postgres-password)" > ~/.pgpass &&
       chmod 0600 ~/.pgpass &&
       pg_dump 
