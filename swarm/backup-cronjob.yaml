@@ -19,10 +19,13 @@ services:
       - cats_postgres-db
     secrets:
       - cats_postgres-password
+
     environment:
       PGHOST: db
+
     networks:
       - cats_cats
+
     command: >
       sh -c '
       PGPASSWORD=$$(cat /run/secrets/cats_postgres-password)
@@ -33,7 +36,6 @@ services:
       --no-owner
       --format=custom
       --file=/backup/$$(cat /cats_postgres-db).sql.gz'
-
 volumes:
   postgres-backup-restore-volume:
     driver: local

@@ -4,15 +4,15 @@ services:
   app:
     image: linosthology/bachelor-thesis-example-combined-l1nus:1.0
     ports:
-      - 4000
+      - ${PORT:-4000}:4000
     configs:
       - postgres-user
       - postgres-db
     secrets:
       - postgres-password
     environment:
-      PGHOST: db
       PORT: 4000
+      PGHOST: db
       PGPORT: 5432
     networks:
       - cats
@@ -22,11 +22,10 @@ services:
       PGPASSWORD=$$(cat /run/secrets/postgres-password)
       PGDATABASE=$$(cat /postgres-db)
       node app.js'
-
   db:
     image: postgres:alpine
     ports:
-      - 5432
+      - ${POSTGRES_PORT:-5432}:5432
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ../sql:/docker-entrypoint-initdb.d/
