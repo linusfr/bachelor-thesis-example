@@ -47,8 +47,7 @@ volumes:
       device: ":/srv/nfs/postgres-backup-cats-swarm"
 
 networks:
-  default:
-    name: cats_cats
+  name: cats_cats
 
 secrets:
   cats_postgres-password:
