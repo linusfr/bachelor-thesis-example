@@ -31,7 +31,15 @@ RUN npm run build
 # --------------------------
 FROM node:15-alpine
 
+# port for the fastify server to listen on
 ENV PORT=3000
+
+# database information
+ENV PGHOST=db
+ENV PGPORT=5432
+ENV PGDATABASE=cats
+ENV PGUSER=demo
+ENV PGPASSWORD=secure_password
 
 # set working directory
 WORKDIR /app
