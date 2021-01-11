@@ -37,6 +37,8 @@ spec:
           volumeMounts:
             - name: postgres-volume
               mountPath: /var/lib/postgresql/data
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d/
           env:
             - name: POSTGRES_DB
               valueFrom:
@@ -65,10 +67,6 @@ spec:
                   key: user
           ports:
             - containerPort: 5432
-
-      volumeMounts:
-        - name: init-script
-          mountPath: /docker-entrypoint-initdb.d/
 
   volumes:
     - name: init-script
