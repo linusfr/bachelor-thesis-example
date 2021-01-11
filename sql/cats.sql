@@ -12,4 +12,4 @@ VALUES
 INSERT INTO cat
     (name, color)
 VALUES
-    ('Alice', 'Grün');
+    ('Alice', 'Blau');
