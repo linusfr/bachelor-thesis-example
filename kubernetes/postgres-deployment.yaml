@@ -68,10 +68,10 @@ spec:
           ports:
             - containerPort: 5432
 
-  volumes:
-    - name: init-script
-      configMap:
-        name: cats-init-script
+      volumes:
+        - name: init-script
+          configMap:
+            name: cats-init-script
 
   volumeClaimTemplates:
     - metadata:
