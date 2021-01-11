@@ -65,6 +65,16 @@ spec:
                   key: user
           ports:
             - containerPort: 5432
+
+      volumeMounts:
+        - name: init-script
+          mountPath: /docker-entrypoint-initdb.d/
+
+  volumes:
+    - name: init-script
+      configMap:
+        name: cats-init-script
+
   volumeClaimTemplates:
     - metadata:
         name: postgres-volume
