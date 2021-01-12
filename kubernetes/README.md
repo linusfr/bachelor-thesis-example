@@ -1,3 +1,9 @@
+# 1
+
+```
+kubectl create configmap cats-init-script --file ../sql/cats.sql
+```
+
 # Postgres Steps
 
 ## dumpen
