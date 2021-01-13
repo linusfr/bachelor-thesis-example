@@ -16,7 +16,8 @@ ENV REACT_APP_API_HOST=$API_HOST \
 COPY ./app/package*.json ./
 
 # install dependencies
-RUN npm install react-scripts@4.0.0 -g --silent && npm install --silent
+RUN npm install react-scripts@4.0.0 -g --silent && \
+    npm install --silent
 
 # add app
 COPY ./app/public ./public
@@ -30,15 +31,14 @@ RUN npm run build
 # --------------------------
 FROM node:15-alpine
 
-# port for the fastify server to listen on
-ENV PORT=3000
-
 # database information
 ENV PGHOST \  
     PGPORT \
     PGDATABASE \
     PGUSER \
-    PGPASSWORD
+    PGPASSWORD \
+    # port for the fastify server to listen on
+    PORT=3000
 
 # set working directory
 WORKDIR /app
