@@ -9,6 +9,7 @@ WORKDIR /app
 # add environment variables
 ARG API_HOST=linusfr.duckdns.org \
     API_PORT=4000
+    
 ENV REACT_APP_API_HOST=$API_HOST \
     REACT_APP_API_PORT=$API_PORT
 
