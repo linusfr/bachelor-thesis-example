@@ -7,8 +7,8 @@ FROM node:15-alpine as builder
 WORKDIR /app
 
 # add environment variables
-ARG API_HOST=l1nus.duckdns.org
-ARG API_PORT=4000
+ARG API_HOST=linusfr.duckdns.org \
+    API_PORT=4000
 ENV REACT_APP_API_HOST=$API_HOST \
     REACT_APP_API_PORT=$API_PORT
 
@@ -16,8 +16,7 @@ ENV REACT_APP_API_HOST=$API_HOST \
 COPY ./app/package*.json ./
 
 # install dependencies
-RUN npm install react-scripts@4.0.0 -g --silent
-RUN npm install --silent
+RUN npm install react-scripts@4.0.0 -g --silent && npm install --silent
 
 # add app
 COPY ./app/public ./public
