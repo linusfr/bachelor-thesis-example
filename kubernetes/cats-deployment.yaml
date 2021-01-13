@@ -45,6 +45,6 @@ spec:
             - name: PORT
               value: "4001"
 
-          image: linosthology/bachelor-thesis-example-combined-4001:1.0
+          image: linusfr/bachelor-thesis-example:1.0-linusfr.duckdns.org-4001
           ports:
             - containerPort: 4001

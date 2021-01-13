@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   app:
-    image: linosthology/bachelor-thesis-example-combined-l1nus:1.0
+    image: linusfr/bachelor-thesis-example:1.0-linusfr.duckdns.org-4000
     ports:
       - ${PORT:-4000}:4000
     configs:
