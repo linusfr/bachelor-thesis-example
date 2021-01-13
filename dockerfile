@@ -34,11 +34,11 @@ FROM node:15-alpine
 ENV PORT=3000
 
 # database information
-ENV PGHOST=db
-ENV PGPORT=5432
-ENV PGDATABASE=cats
-ENV PGUSER=demo
-ENV PGPASSWORD=secure_password
+ENV PGHOST \  
+    PGPORT \
+    PGDATABASE \
+    PGUSER \
+    PGPASSWORD
 
 # set working directory
 WORKDIR /app
