@@ -38,7 +38,7 @@ ENV PGHOST \
     PGUSER \
     PGPASSWORD \
     # port for the fastify server to listen on
-    PORT=3000
+    PORT
 
 # set working directory
 WORKDIR /app
