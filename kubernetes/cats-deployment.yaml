@@ -30,21 +30,28 @@ spec:
     spec:
       containers:
         - name: cats
+          image: linusfr/bachelor-thesis-example:1.0-linusfr.duckdns.org-4001
+          ports:
+            - containerPort: 4001
           env:
             - name: PGUSER
-              value: "demo"
+              configMapKeyRef:
+                name: postgres-configmap
+                key: user
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres-password-secret
                   key: password
             - name: PGHOST
-              value: "postgres-service"
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: host
             - name: PGDATABASE
-              value: "cats"
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: dbname
             - name: PORT
               value: "4001"
-
-          image: linusfr/bachelor-thesis-example:1.0-linusfr.duckdns.org-4001
-          ports:
-            - containerPort: 4001
