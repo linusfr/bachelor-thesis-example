@@ -35,6 +35,7 @@ spec:
             - containerPort: 4001
           env:
             - name: PGUSER
+              valueFrom:
               configMapKeyRef:
                 name: postgres-configmap
                 key: user
