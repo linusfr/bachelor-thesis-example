@@ -36,9 +36,9 @@ spec:
           env:
             - name: PGUSER
               valueFrom:
-              configMapKeyRef:
-                name: postgres-configmap
-                key: user
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: user
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
