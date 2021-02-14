@@ -7,8 +7,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 4001
-      targetPort: 4001
+    - port: 4000
+      targetPort: 4000
   selector:
     app: cats
 ---
@@ -30,9 +30,9 @@ spec:
     spec:
       containers:
         - name: cats
-          image: linusfr/bachelor-thesis-example:1.0-linusfr.duckdns.org-4001
+          image: linusfr/bachelor-thesis-example:1.0-https-kubernetes-example.duckdns.org-4000
           ports:
-            - containerPort: 4001
+            - containerPort: 4000
           env:
             - name: PGUSER
               valueFrom:
@@ -55,4 +55,4 @@ spec:
                   name: postgres-configmap
                   key: dbname
             - name: PORT
-              value: "4001"
+              value: "4000"
