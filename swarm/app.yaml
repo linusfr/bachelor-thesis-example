@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  app:
+    image: linusfr/bachelor-thesis-example:1.0-https-swarm-example.duckdns.org-4000
+    ports:
+      - ${PORT:-4000}:4000
+    configs:
+      - cats_postgres-user
+      - cats_postgres-db
+    secrets:
+      - cats_postgres-password
+    environment:
+      PORT: 4000
+      PGHOST: db
+      PGPORT: 5432
+    networks:
+      - cats_cats
+    command: >
+      sh -c '
+      PGUSER=$$(cat /cats_postgres-user)
+      PGPASSWORD=$$(cat /run/secrets/cats_postgres-password)
+      PGDATABASE=$$(cat /cats_postgres-db)
+      node app.js'
+
+secrets:
+  cats_postgres-password:
+    external: true
+
+configs:
+  cats_postgres-user:
+    external: true
+  cats_postgres-db:
+    external: true
+
+networks:
+  cats_cats:
+    external: true

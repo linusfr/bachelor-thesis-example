@@ -1,27 +1,6 @@
 version: "3.8"
 
 services:
-  app:
-    image: linusfr/bachelor-thesis-example:1.0-https-swarm-example.duckdns.org-4000
-    ports:
-      - ${PORT:-4000}:4000
-    configs:
-      - postgres-user
-      - postgres-db
-    secrets:
-      - postgres-password
-    environment:
-      PORT: 4000
-      PGHOST: db
-      PGPORT: 5432
-    networks:
-      - cats
-    command: >
-      sh -c '
-      PGUSER=$$(cat /postgres-user)
-      PGPASSWORD=$$(cat /run/secrets/postgres-password)
-      PGDATABASE=$$(cat /postgres-db)
-      node app.js'
   db:
     image: postgres:alpine
     ports:
