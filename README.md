@@ -26,4 +26,5 @@ docker volume rm $(docker volume ls -q)
 kubectl delete -f .
 kubectl delete configmap cats-init-script
 kubectl delete pvc postgres-volume-postgres-statefulset-0
+kubectl delete job backup-job
 ```
