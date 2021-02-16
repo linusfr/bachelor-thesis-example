@@ -10,3 +10,20 @@ This directory consists of five directories:
 
 The dockerfile uses the directories "app" and "server".  
 The image created by building the dockerfile is used in the deployments in the directories "swarm" and "kubernetes".
+
+# clean up
+
+## swarm
+
+```
+docker stack rm cats
+docker volume rm $(docker volume ls -q)
+```
+
+## kubernetes
+
+```
+kubectl delete -f .
+kubectl delete configmap cats-init-script
+kubectl delete pvc postgres-volume-postgres-statefulset-0
+```
