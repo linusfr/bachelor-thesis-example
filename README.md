@@ -17,7 +17,7 @@ The image created by building the dockerfile is used in the deployments in the d
 
 ```
 docker stack rm cats
-docker volume rm $(docker volume ls -q)
+docker volume rm cats_postgres-data
 ```
 
 ## kubernetes
