@@ -11,6 +11,12 @@ This directory consists of five directories:
 The dockerfile uses the directories "app" and "server".  
 The image created by building the dockerfile is used in the deployments in the directories "swarm" and "kubernetes".
 
+# setup kubectl
+
+```
+scp -q kubernetes@192.168.178.29:/etc/rancher/k3s/k3s.yaml ~/.kube/config && sed -i "s#server: https://127.0.0.1:6443#server: https://192.168.178.29:6443#g" ~/.kube/config
+```
+
 # clean up
 
 ## swarm
