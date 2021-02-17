@@ -34,5 +34,6 @@ docker volume rm cats_postgres-data
 kubectl delete -f .
 kubectl delete configmap cats-init-script
 kubectl delete pvc postgres-volume-postgres-statefulset-0
+kubectl delete cronjob postgres-backup-cronjob
 kubectl delete job backup-job
 ```
