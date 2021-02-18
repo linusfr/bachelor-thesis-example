@@ -24,16 +24,17 @@ scp -q kubernetes@192.168.178.29:/etc/rancher/k3s/k3s.yaml ~/.kube/config && sed
 ### swarm
 
 ```
-docker stack rm cats
+docker stack rm cats && \
 docker volume rm cats_postgres-data
 ```
 
 ### kubernetes
 
 ```
-kubectl delete -f .
-kubectl delete configmap cats-init-script
-kubectl delete pvc postgres-volume-postgres-statefulset-0
-kubectl delete cronjob postgres-backup-cronjob
+kubectl delete -f . && \
+kubectl delete configmap cats-init-script && \
+kubectl delete pvc postgres-volume-postgres-statefulset-0 && \
+kubectl delete cronjob postgres-backup-cronjob && \
+kubectl delete job postgres-restore-job && \
 kubectl delete job backup-job
 ```
