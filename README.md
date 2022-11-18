@@ -1,5 +1,8 @@
 # bachelor-thesis-example
 
+This repository contains all the source code for my bachelors thesis.
+The thesis itself is not publicly available.
+
 ## directory structure
 
 This directory consists of five directories:
@@ -10,7 +13,7 @@ This directory consists of five directories:
 4. the swarm mode yamls (swarm)
 5. the sql script for the postgres (sql) used by both kubernetes and the swarm mode
 
-The dockerfile uses the directories "app" and "server".  
+The dockerfile uses the directories "app" and "server".
 The image created by building the dockerfile is used in the deployments in the directories "swarm" and "kubernetes".
 
 ## setup kubectl
